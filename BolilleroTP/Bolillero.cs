@@ -1,45 +1,65 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using BolilleroTP;
 
-namespace BolilleroTP
+public class Bolillero : BolitaAleatoria, BolitaSimple
 {
-    public class Bolillero : BolitaAleatoria, BolitaSimple
+    public List<int> BolillasFuera;
+    public List<int> Bolitas;
+    public List<int> numerosWin;
+    int JugarNveces;
+
+    private Bolillero(List<int> numWin, int jugarXveces, int rango)
     {
-        public List<int> BolillasFuera { get; private set; }
-        public List<int> Bolitas { get; private set; }
-        public List<int> numerosWin { get; private set; }
-        private int JugarNveces;
-
-        public Bolillero(List<int> numWin, int jugarXveces, int rango)
+        numerosWin = numWin;
+        JugarNveces = jugarXveces;
+        Bolitas = new List<int>();
+        BolillasFuera = new List<int>();
+        for (int i = 0; i < rango; i++)
         {
-            numerosWin = numWin;
-            JugarNveces = jugarXveces;
-            Bolitas = new List<int>();
-            BolillasFuera = new List<int>();
+            Bolitas.Add(i);
+        }
+    }
 
-            for (int i = 0; i < rango; i++)
-            {
-                Bolitas.Add(i);
-            }
+    public Bolillero Clonar()
+    {
+        List<int> numerosWinClon = new List<int>(numerosWin);
+        int jugarXvecesClon = JugarNveces;
+        int rangoOriginal = Bolitas.Count + BolillasFuera.Count;
+
+
+        Bolillero clon = new Bolillero(numerosWinClon, jugarXvecesClon, rangoOriginal);
+        clon.BolillasFuera = new List<int>(BolillasFuera);
+
+        clon.Bolitas = new List<int>(Bolitas);
+        return clon;
+    }
+
+
+    public void PrimerBolita(List<int> Bolitas, List<int> BolillasFuera)
+    {
+        var bolita = Bolitas[0];    // Toma la bolilla de la primera posición
+        Bolitas.RemoveAt(0);         // Elimina la bolilla del bolillero
+        BolillasFuera.Add(bolita);  // Agrega la bolilla a la lista de bolillas fuera
+    }
+
+
+
+    public bool JugarPrimera()
+    {
+        bool gano = false;
+
+        // Este bucle debería estar extrayendo las bolillas en el orden correcto
+        for (int i = 0; i < numerosWin.Count; i++)
+        {
+            PrimerBolita(Bolitas, BolillasFuera);  // Extrae la bolilla
         }
 
-
-        public void PrimerBolita(List<int> Bolitas, List<int> BolillasFuera)
+        // Compara si las bolillas fuera coinciden con la jugada ganadora
+        if (numerosWin.SequenceEqual(BolillasFuera))
         {
             gano = true;
         }
         MeterBolillasdeAfuera();  // Vuelve a colocar las bolillas fuera al bolillero
         return gano;
-    }
-
-    private object Clonar()
-    {
-        List<int> bolitasClon = new List<int>(Bolitas);
-        List<int> numerosWinClon = new List<int>(numerosWin);
-        List<int> bolitasAfueraClon = new List<int>(BolillasFuera);
-        int JugarNVecesClon = JugarNveces;
-        Bolillero clon = new Bolillero(numerosWinClon, JugarNVecesClon);
-        return clon;
     }
 
 
@@ -50,63 +70,32 @@ namespace BolilleroTP
 
         for (int i = 0; i < numerosWin.Count; i++)
         {
-            SacarAleatorio(Bolitas, BolillasFuera); 
+            SacarAleatorio(Bolitas, BolillasFuera);
         }
 
-        
-        public bool JugarPrimera()
+        if (numerosWin.SequenceEqual(BolillasFuera))
         {
-            BolillasFuera.Clear(); 
-
-            for (int i = 0; i < numerosWin.Count && i < Bolitas.Count; i++)
-            {
-                PrimerBolita(Bolitas, BolillasFuera);
-            }
-
-            bool gano = numerosWin.SequenceEqual(BolillasFuera);
-            return gano;
+            gano = true;
         }
+        MeterBolillasdeAfuera();
+        return gano;
+    }
 
-       
-        public bool JugarRndm()
+    public void MeterBolillasdeAfuera()
+    {
+        Bolitas.AddRange(BolillasFuera);
+        BolillasFuera.Clear();
+    }
+
+    void BolitaSimple.PrimerBolita(List<int> Bolitas, List<int> BolillasFuera)
+    {
+        if (Bolitas.Count > 0)
         {
-            BolillasFuera.Clear();
-
-            for (int i = 0; i < numerosWin.Count && Bolitas.Count > 0; i++)
-            {
-                SacarAleatorio(Bolitas, BolillasFuera);
-            }
-
-            bool gano = numerosWin.SequenceEqual(BolillasFuera);
-            return gano;
-        }
-
-        
-        public int JugarNVeces(bool usarPrimera = true)
-        {
-            int aciertos = 0;
-
-            for (int i = 0; i < JugarNveces; i++)
-            {
-                bool gano = usarPrimera ? JugarPrimera() : JugarRndm();
-                if (gano) aciertos++;
-                MeterBolillasdeAfuera();
-            }
-
-            return aciertos;
-        }
-
-     
-        public void MeterBolillasdeAfuera()
-        {
-            Bolitas.AddRange(BolillasFuera);
-            BolillasFuera.Clear();
-        }
-
-        
-        void BolitaSimple.PrimerBolita(List<int> Bolitas, List<int> BolillasFuera)
-        {
-            PrimerBolita(Bolitas, BolillasFuera);
+            var bolita = Bolitas[0];
+            Bolitas.RemoveAt(0);
+            BolillasFuera.Add(bolita);
         }
     }
 }
+
+
