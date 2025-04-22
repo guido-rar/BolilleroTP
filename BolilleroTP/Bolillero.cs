@@ -47,6 +47,16 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
         return gano;
     }
 
+    private object Clonar()
+    {
+        List<int> bolitasClon = new List<int>(Bolitas);
+        List<int> numerosWinClon = new List<int>(numerosWin);
+        List<int> bolitasAfueraClon = new List<int>(BolillasFuera);
+        int JugarNVecesClon = JugarNveces;
+        Bolillero clon = new Bolillero(numerosWinClon, JugarNVecesClon);
+        return clon;
+    }
+
 
 
     public bool JugarRndm()
