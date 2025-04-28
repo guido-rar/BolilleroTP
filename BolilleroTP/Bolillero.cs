@@ -7,7 +7,8 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
     public List<int> numerosWin;
     int JugarNveces;
 
-    private Bolillero(List<int> numWin, int jugarXveces, int rango)
+    public Bolillero(List<int> numWin, int jugarXveces, int rango)
+
     {
         numerosWin = numWin;
         JugarNveces = jugarXveces;
@@ -19,21 +20,7 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
         }
     }
 
-    public Bolillero Clonar()
-    {
-        List<int> numerosWinClon = new List<int>(numerosWin);
-        int jugarXvecesClon = JugarNveces;
-        int rangoOriginal = Bolitas.Count + BolillasFuera.Count;
-
-
-        Bolillero clon = new Bolillero(numerosWinClon, jugarXvecesClon, rangoOriginal);
-        clon.BolillasFuera = new List<int>(BolillasFuera);
-
-        clon.Bolitas = new List<int>(Bolitas);
-        return clon;
-    }
-
-
+ parent of 5f25fc7 (V.1 Bolillero)
     public void PrimerBolita(List<int> Bolitas, List<int> BolillasFuera)
     {
         var bolita = Bolitas[0];    // Toma la bolilla de la primera posición
@@ -70,7 +57,10 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
 
         for (int i = 0; i < numerosWin.Count; i++)
         {
-            SacarAleatorio(Bolitas, BolillasFuera);
+        SacarAleatorio(Bolitas, BolillasFuera);
+
+            SacarAleatorio(Bolitas, BolillasFuera); 
+ parent of 5f25fc7 (V.1 Bolillero)
         }
 
         if (numerosWin.SequenceEqual(BolillasFuera))
@@ -98,4 +88,4 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
     }
 }
 
-
+ parent of 5f25fc7 (V.1 Bolillero)

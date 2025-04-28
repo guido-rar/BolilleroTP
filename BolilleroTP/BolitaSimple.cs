@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿// BolitaSimple.cs
+using System.Collections.Generic;
 
 namespace BolilleroTP
 {

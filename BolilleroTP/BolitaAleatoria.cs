@@ -1,4 +1,5 @@
-﻿using System;
+﻿// BolitaAleatoria.cs
+using System;
 using System.Collections.Generic;
 
 namespace BolilleroTP
