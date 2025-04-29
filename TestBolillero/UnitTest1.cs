@@ -1,39 +1,120 @@
+using System.Collections.Generic;
+using Xunit;
 using BolilleroTP;
+
 namespace TestBolillero
 {
     public class UnitTest1
     {
+        private Bolillero bolillero;
+
+        public UnitTest1()
+        {
+
+            List<int> numerosWin = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            bolillero = new Bolillero(numerosWin, 1, 10);
+        }
+
+        [Fact]
+        public void SimuHilosOK()
+        {
+
+
+        }
+
+        [Fact]
+        public void SacarBolilla()
+        {
+
+            Assert.Equal(10, bolillero.Bolitas.Count);
+            Assert.Empty(bolillero.BolillasFuera);
+
+
+            bolillero.PrimerBolita(bolillero.Bolitas, bolillero.BolillasFuera);
+
+
+            Assert.Contains(0, bolillero.BolillasFuera);
+
+
+            Assert.Equal(9, bolillero.Bolitas.Count);
+
+
+            Assert.Single(bolillero.BolillasFuera);
+        }
+
+        [Fact]
+        public void ReIngresar()
+        {
+
+            bolillero.PrimerBolita(bolillero.Bolitas, bolillero.BolillasFuera);
+
+
+            Assert.Equal(9, bolillero.Bolitas.Count);
+            Assert.Single(bolillero.BolillasFuera);
+
+
+            bolillero.MeterBolillasdeAfuera();
+
+
+            Assert.Equal(10, bolillero.Bolitas.Count);
+
+
+            Assert.Empty(bolillero.BolillasFuera);
+        }
+
+        [Fact]
+        public void JugarGana()
+        {
+
+            bool resultado = bolillero.JugarPrimera();
+            Assert.True(resultado);
+        }
+
+        [Fact]
+        public void JugarPierde()
+        {
+            List<int> numerosWin = new List<int> { 4, 2, 1 };
+            Bolillero bolilleroPierde = new Bolillero(numerosWin, 1, 10);
+
+
+            bool resultado = bolilleroPierde.JugarPrimera();
+            Assert.False(resultado);
+        }
+
+        [Fact]
+        public void GanarNVeces()
+        {
+
+            List<int> jugada = new List<int> { 0, 1 };
+            Bolillero bolilleroGana = new Bolillero(jugada, 1, 10);
+
+
+            long vecesGanadas = bolilleroGana.JugarNVeces(10);
+            Assert.True(vecesGanadas>0);
+        }
+
+
+
         [Fact]
         public void JugarRandomOK()
         {
-            List<int> numerosWin = new List<int> { 1, 2, 8, 5, 4, 9, 7, 3, 0, 6 };
 
-            Bolillero mibolillero = new Bolillero(numerosWin, 10, 10);
+            Assert.Equal(10, bolillero.Bolitas.Count);
+            Assert.Empty(bolillero.BolillasFuera);
 
 
-            Assert.True(mibolillero.JugarPrimera());
+            bolillero.JugarRndm();
+
+
+            Assert.Equal(0, bolillero.Bolitas.Count);
+            Assert.Equal(10, bolillero.BolillasFuera.Count);
+
+
+            bolillero.MeterBolillasdeAfuera();
+
+
+            Assert.Equal(10, bolillero.Bolitas.Count);
+            Assert.Empty(bolillero.BolillasFuera);
         }
-
-        [Fact]
-
-        public void SacarBolillaOK()
-        {
-            List<int> numerosWin = new List<int> { 1, 2, 8, 5, 4, 9, 7, 3, 0, 6 };
-
-            Bolillero mibolillero = new Bolillero(numerosWin, 10, 10);
-
-            mibolillero.JugarPrimera();  // Esto debería ejecutar la extracción de bolillas
-
-            // Verifica que la bolilla 0 esté fuera del bolillero
-            Assert.Contains(0, mibolillero.BolillasFuera);
-
-            // Verifica que ahora haya 9 bolillas dentro del bolillero
-            Assert.Equal(9, mibolillero.Bolitas.Count);
-
-            // Verifica que solo haya una bolilla fuera del bolillero
-            Assert.Single(mibolillero.BolillasFuera);
-        }
-
-
     }
-} 
+}

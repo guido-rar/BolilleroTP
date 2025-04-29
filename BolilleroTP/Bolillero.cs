@@ -19,10 +19,39 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
         }
     }
 
+    public Bolillero Clonar()
+    {
+        List<int> numerosWinClon = new List<int>(numerosWin);
+        int jugarXvecesClon = JugarNveces;
+        int rangoOriginal = Bolitas.Count + BolillasFuera.Count;
+
+
+        Bolillero clon = new Bolillero(numerosWinClon, jugarXvecesClon, rangoOriginal);
+        clon.BolillasFuera = new List<int>(BolillasFuera);
+
+        clon.Bolitas = new List<int>(Bolitas);
+        return clon;
+    }
+
+    public long JugarNVeces(int numJugadas, bool usarPrimera = true)
+    {
+        long aciertos = 0;
+
+        for (int i = 0; i < numJugadas; i++)
+        {
+            bool gano = usarPrimera ? JugarPrimera() : JugarRndm();
+            if (gano) aciertos++;
+
+        }
+
+        return aciertos;
+    }
+
+
     public void PrimerBolita(List<int> Bolitas, List<int> BolillasFuera)
     {
         var bolita = Bolitas[0];    // Toma la bolilla de la primera posición
-        Bolitas.RemoveAt(0);         // Elimina la bolilla del bolillero
+        Bolitas.RemoveAt(0);        
         BolillasFuera.Add(bolita);  // Agrega la bolilla a la lista de bolillas fuera
     }
 
@@ -55,14 +84,14 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
 
         for (int i = 0; i < numerosWin.Count; i++)
         {
-            SacarAleatorio(Bolitas, BolillasFuera); 
+            SacarAleatorio(Bolitas, BolillasFuera);
         }
 
         if (numerosWin.SequenceEqual(BolillasFuera))
         {
             gano = true;
         }
-        MeterBolillasdeAfuera();
+        
         return gano;
     }
 
