@@ -91,7 +91,7 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
         {
             gano = true;
         }
-        
+        MeterBolillasdeAfuera();
         return gano;
     }
 

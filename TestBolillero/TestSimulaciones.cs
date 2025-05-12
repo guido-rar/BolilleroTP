@@ -18,9 +18,14 @@ namespace TestSimulaciones
         [Fact]
         public void SimuHilosOK()
         {
-            long result=simulacion.SimularConHilos(bolillero, 34, 5);
-            Assert.True(result>0);
+            bool SiempreGana = false;
+            long result = simulacion.SimularConHilos(bolillero, 100000000, 5);
+            if (result>0)
+            {
+                SiempreGana = true;
+            }
+           
+            Assert.True(SiempreGana);
         }
-
     }
 }
