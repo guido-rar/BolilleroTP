@@ -11,10 +11,8 @@ namespace TestSimulaciones
 
         public UnitTest2()
         {
-
             List<int> numerosWin = new List<int> { 0, 1, 2};
             bolillero = new Bolillero(numerosWin, 1, 3);
-            
         }
 
         [Fact]
