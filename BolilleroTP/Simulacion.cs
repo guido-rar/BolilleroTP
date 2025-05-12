@@ -38,6 +38,5 @@ namespace BolilleroTP
             long totalWins = tareas.Sum(t => t.Result);
             return totalWins;
         }
-
     }
 }
