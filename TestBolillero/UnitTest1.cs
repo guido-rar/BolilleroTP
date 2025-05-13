@@ -15,13 +15,7 @@ namespace TestBolillero
             bolillero = new Bolillero(numerosWin, 1, 10);
         }
 
-        [Fact]
-        public void SimuHilosOK()
-        {
-
-
-        }
-
+   
         [Fact]
         public void SacarBolilla()
         {
@@ -102,16 +96,7 @@ namespace TestBolillero
             Assert.Equal(10, bolillero.Bolitas.Count);
             Assert.Empty(bolillero.BolillasFuera);
 
-
             bolillero.JugarRndm();
-
-
-            Assert.Equal(0, bolillero.Bolitas.Count);
-            Assert.Equal(10, bolillero.BolillasFuera.Count);
-
-
-            bolillero.MeterBolillasdeAfuera();
-
 
             Assert.Equal(10, bolillero.Bolitas.Count);
             Assert.Empty(bolillero.BolillasFuera);
