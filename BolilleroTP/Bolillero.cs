@@ -19,11 +19,40 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
         }
     }
 
+    public Bolillero Clonar()
+    {
+        List<int> numerosWinClon = new List<int>(numerosWin);
+        int jugarXvecesClon = JugarNveces;
+        int rangoOriginal = Bolitas.Count + BolillasFuera.Count;
+
+
+        Bolillero clon = new Bolillero(numerosWinClon, jugarXvecesClon, rangoOriginal);
+        clon.BolillasFuera = new List<int>(BolillasFuera);
+
+        clon.Bolitas = new List<int>(Bolitas);
+        return clon;
+    }
+
+    public long JugarNVeces(int numJugadas, bool usarPrimera = true)
+    {
+        long aciertos = 0;
+
+        for (int i = 0; i < numJugadas; i++)
+        {
+            bool gano = usarPrimera ? JugarPrimera() : JugarRndm();
+            if (gano) aciertos++;
+
+        }
+
+        return aciertos;
+    }
+
+
     public void PrimerBolita(List<int> Bolitas, List<int> BolillasFuera)
     {
-        var bolita = Bolitas[0];    // Toma la bolilla de la primera posición
-        Bolitas.RemoveAt(0);         // Elimina la bolilla del bolillero
-        BolillasFuera.Add(bolita);  // Agrega la bolilla a la lista de bolillas fuera
+        var bolita = Bolitas[0];
+        Bolitas.RemoveAt(0);
+        BolillasFuera.Add(bolita);
     }
 
 
@@ -32,18 +61,18 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
     {
         bool gano = false;
 
-        // Este bucle debería estar extrayendo las bolillas en el orden correcto
+
         for (int i = 0; i < numerosWin.Count; i++)
         {
-            PrimerBolita(Bolitas, BolillasFuera);  // Extrae la bolilla
+            PrimerBolita(Bolitas, BolillasFuera);
         }
 
-        // Compara si las bolillas fuera coinciden con la jugada ganadora
+
         if (numerosWin.SequenceEqual(BolillasFuera))
         {
             gano = true;
         }
-        MeterBolillasdeAfuera();  // Vuelve a colocar las bolillas fuera al bolillero
+        MeterBolillasdeAfuera();
         return gano;
     }
 
@@ -55,7 +84,7 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
 
         for (int i = 0; i < numerosWin.Count; i++)
         {
-            SacarAleatorio(Bolitas, BolillasFuera); 
+            SacarAleatorio(Bolitas, BolillasFuera);
         }
 
         if (numerosWin.SequenceEqual(BolillasFuera))
