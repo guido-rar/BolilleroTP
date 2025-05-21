@@ -101,7 +101,7 @@ public class Bolillero : BolitaAleatoria, BolitaSimple
         BolillasFuera.Clear();
     }
 
-    void BolitaSimple.PrimerBolita(List<int> Bolitas, List<int> BolillasFuera)
+    void BolitaSimple.SacarBolita(List<int> Bolitas, List<int> BolillasFuera)
     {
         if (Bolitas.Count > 0)
         {

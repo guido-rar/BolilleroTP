@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace BolilleroTP
 {
-    public interface BolitaSimple
+    internal class Logica
     {
-        void PrimerBolita(List<int> Bolitas, List<int> BolillasFuera);
     }
-    
 }

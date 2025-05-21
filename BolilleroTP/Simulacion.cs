@@ -17,20 +17,22 @@
 
         public long SimularConHilos(Bolillero bolillero, int cantSimu, int cantHilos)
         {
+            Task<long>[] tareas = OptiSimu(bolillero, cantSimu, cantHilos);
 
-            Task.WaitAll(OptiSimu(bolillero, cantSimu, cantHilos));
+            Task.WaitAll(tareas);
 
-            long totalWins = OptiSimu(bolillero, cantSimu, cantHilos).Sum(t => t.Result);
+            long totalWins = tareas.Sum(t => t.Result);
             return totalWins;
         }
 
         public async Task<long> SimularConHilosAsync(Bolillero bolillero, int cantSimu, int cantHilos)
         {
+            Task<long>[] tareas= OptiSimu(bolillero, cantSimu, cantHilos);
 
-            await Task.WhenAll(OptiSimu(bolillero, cantSimu, cantHilos));
+            await Task.WhenAll(tareas);
 
 
-            long totalWins = OptiSimu(bolillero, cantSimu, cantHilos).Sum(t => t.Result);
+            long totalWins = tareas.Sum(t => t.Result);
             return totalWins;
         }
 
