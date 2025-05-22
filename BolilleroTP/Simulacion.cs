@@ -9,7 +9,7 @@
             long cantWin = 0;
             for (int i = 0; i < cantSimu; i++)
             {
-                cantWin += bolilla1.JugarNVeces(cantSimu, logica);
+                cantWin += bolilla1.JugarNVeces(cantSimu);
             }
 
             return cantWin;
@@ -52,7 +52,7 @@
 
                 tareas[i] = (Task<long>.Run(() =>
 
-                    clon.JugarNVeces(simusPorHilo, logica)
+                    clon.JugarNVeces(simusPorHilo)
                 ));
             }
             return tareas;

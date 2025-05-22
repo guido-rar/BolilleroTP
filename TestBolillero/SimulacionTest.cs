@@ -8,11 +8,11 @@ namespace TestSimulaciones
     {
         private Bolillero bolillero;
         private Simulacion simulacion = new Simulacion();
-
+        private ILogica logicaPrimera = new SacarPrimera();
         public SimulacionTest()
         {
             List<int> numerosWin = new List<int> { 0, 1, 2 };
-            bolillero = new Bolillero(numerosWin, 3, );
+            bolillero = new Bolillero(numerosWin, 3, logicaPrimera);
         }
 
         [Fact]

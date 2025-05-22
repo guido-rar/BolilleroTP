@@ -96,7 +96,7 @@ namespace TestBolillero
         public void JugarRandomOK()
         {
             List<int> numerosWin = new List<int> { 4, 2, 1 };
-            Bolillero bolilleroRndm = new Bolillero(numerosWin, 10, logicaRndm);
+            Bolillero bolilleroRndm = new Bolillero(numerosWin,  10, logicaRndm);
 
             Assert.Equal(10, bolillero.Bolitas.Count);
             Assert.Empty(bolillero.BolillasFuera);
