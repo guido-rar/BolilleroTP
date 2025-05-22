@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BolilleroTP
 {
-    internal class Logica
+    public interface ILogica
     {
+        int SacarBolita(Bolillero bolillero);
     }
 }

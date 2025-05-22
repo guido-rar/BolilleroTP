@@ -5,11 +5,11 @@
 
         public long SimulacionSinHilos(Bolillero bolilla1, int cantSimu)
         {
-
+            ILogica logica = new SacarAleatorio();
             long cantWin = 0;
             for (int i = 0; i < cantSimu; i++)
             {
-                cantWin += bolilla1.JugarNVeces(cantSimu, false);
+                cantWin += bolilla1.JugarNVeces(cantSimu, logica);
             }
 
             return cantWin;
@@ -40,7 +40,8 @@
         public Task<long>[] OptiSimu(Bolillero bolillero, int cantSimu, int cantHilos)
         {
             Task<long>[] tareas = new Task<long>[cantHilos];
-         
+            ILogica logica = new SacarAleatorio();
+
             int simus = cantSimu / cantHilos;
             int simusEx = cantSimu % cantHilos;
             int simusPorHilo = 0;
@@ -51,7 +52,7 @@
 
                 tareas[i] = (Task<long>.Run(() =>
 
-                    clon.JugarNVeces(simusPorHilo, false)
+                    clon.JugarNVeces(simusPorHilo, logica)
                 ));
             }
             return tareas;
