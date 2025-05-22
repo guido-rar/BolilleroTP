@@ -12,7 +12,7 @@ namespace TestSimulaciones
         public SimulacionTest()
         {
             List<int> numerosWin = new List<int> { 0, 1, 2 };
-            bolillero = new Bolillero(numerosWin, 1, 3);
+            bolillero = new Bolillero(numerosWin, 3, );
         }
 
         [Fact]
