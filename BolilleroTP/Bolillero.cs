@@ -22,6 +22,11 @@ public class Bolillero
 
     }
 
+    public int SacarUna(Bolillero bolillero)
+    {
+        return logica.SacarBolita(this);
+    }
+
     public Bolillero Clonar()
     {
         List<int> numerosWinClon = new List<int>(numerosWin);
