@@ -58,6 +58,59 @@
             return tareas;
         }
 
+        public async Task<long> SimularParallelAsync(Bolillero bolilleroModelo, int CantidadSimu, int CantidadHilos)
+        {
+            if (CantidadSimu <= 0 || CantidadHilos <= 0)
+            {
+                return 0;
+            }
+
+            
+            long[] resultadosPorBloque = new long[CantidadHilos];
+
+          
+            await Task.Run(() =>
+            {
+                long simusBasePorBloque = CantidadSimu / CantidadHilos;
+                long simusExtra = CantidadSimu % CantidadHilos;
+
+                Parallel.For(0, CantidadHilos, i =>
+                {
+                   
+                    long simusParaEsteBloque = simusBasePorBloque + (i < simusExtra ? 1 : 0);
+
+                    if (simusParaEsteBloque > 0)
+                    {
+                        
+                        Bolillero clon = bolilleroModelo.Clonar();
+
+                        // JugarNVeces en el clon ejecuta el sub-lote de simulaciones.
+                        long aciertosEsteBloque = clon.JugarNVeces(simusParaEsteBloque);
+
+                        // Guardar el resultado de este bloque en su posición correspondiente.
+                        // Esto es seguro sin lock porque cada 'i' es único,
+                        // por lo que cada iteración escribe en una celda diferente del array.
+                        resultadosPorBloque[i] = aciertosEsteBloque;
+                    }
+                    else
+                    {
+                        // Si este bloque no tiene simulaciones asignadas (ej. CantidadSimu < CantidadHilos)
+                        resultadosPorBloque[i] = 0;
+                    }
+                });
+            });
+
+            // Sumar los resultados de todos los bloques de trabajo.
+            long aciertosTotales = 0;
+            for (int k = 0; k < resultadosPorBloque.Length; k++)
+            {
+                aciertosTotales += resultadosPorBloque[k];
+            }
+            // Alternativamente, usando LINQ (necesitarías `using System.Linq;`):
+            // long aciertosTotales = resultadosPorBloque.Sum();
+
+            return aciertosTotales;
+        }
 
     }
 }
