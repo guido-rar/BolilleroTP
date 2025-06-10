@@ -1,7 +1,7 @@
 ﻿using BolilleroTP;
 
-public class Bolillero 
-    {
+public class Bolillero
+{
     public List<int> BolillasFuera;
     public List<int> Bolitas;
     public List<int> numerosWin;
@@ -9,7 +9,7 @@ public class Bolillero
 
 
 
-    public Bolillero(List<int> numWin, int rango,ILogica logicaSacar)
+    public Bolillero(List<int> numWin, int rango, ILogica logicaSacar)
     {
         numerosWin = numWin;
         Bolitas = new List<int>();
@@ -41,7 +41,7 @@ public class Bolillero
         return clon;
     }
 
-    public long JugarNVeces(int numJugadas)
+    public long JugarNVeces(long numJugadas)
     {
         long aciertos = 0;
 
